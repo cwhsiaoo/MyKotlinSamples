@@ -11,7 +11,7 @@ import javax.inject.Inject
 class BaseApplication : Application() {
     @Inject lateinit var retrofit: Retrofit
 
-    private val appComponent: AppComponent by lazy {
+    val appComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .networkModule(NetworkModule("https://api.github.com/"))

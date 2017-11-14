@@ -10,4 +10,6 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class, NetworkModule::class))
 interface AppComponent {
     fun inject(app: BaseApplication)
+
+    fun loadingComponent(): LoadingComponent.Builder
 }

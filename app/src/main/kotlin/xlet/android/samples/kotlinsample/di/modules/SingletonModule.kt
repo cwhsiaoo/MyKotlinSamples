@@ -15,12 +15,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xlet.android.samples.kotlinsample.BaseApplication
 import xlet.android.samples.kotlinsample.BuildConfig
+import xlet.android.samples.kotlinsample.di.components.LoadingComponent
 import xlet.android.samples.kotlinsample.di.utils.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
-@Module
+@Module(subcomponents = arrayOf(LoadingComponent::class))
 class AppModule @Inject constructor(val app: BaseApplication) {
     @Singleton
     @Provides
