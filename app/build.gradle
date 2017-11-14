@@ -32,6 +32,7 @@ android {
 
 ext.supportLibraryVersion = '26.1.0'
 ext.daggerVersion = '2.12'
+ext.retrofitVersion = '2.3.0'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     kapt "com.android.databinding:compiler:$gradleVersion"
@@ -44,6 +45,12 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation "com.squareup.okhttp3:okhttp:3.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.google.code.gson:gson:2.8.2"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.12.0'
