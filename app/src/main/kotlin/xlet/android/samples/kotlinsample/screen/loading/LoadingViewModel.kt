@@ -13,7 +13,11 @@ class LoadingViewModel(val maxProgress: Int, private val view: LoadingView) : Ba
     override fun getBaseView(): LoadingView = view
 
     init {
-
+        progress.addOnPropertyChangedCallback(object : android.databinding.Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(p0: android.databinding.Observable?, propertyId: Int) {
+                checkProgressDone(progress.get(), maxProgress, view, progressDisposable)
+            }
+        })
     }
 
     fun startProgress() {
@@ -21,7 +25,6 @@ class LoadingViewModel(val maxProgress: Int, private val view: LoadingView) : Ba
                 .observeOn(Schedulers.io())
                 .subscribe({
                     val newProgress = handleProgress(progress.get(), maxProgress)
-                    checkProgress(newProgress, maxProgress, view, progressDisposable)
                     progress.set(newProgress)
                 })
     }
@@ -37,7 +40,7 @@ class LoadingViewModel(val maxProgress: Int, private val view: LoadingView) : Ba
             return nextProgress
         }
 
-        fun checkProgress(currentProgress: Int, maxProgress: Int, view: LoadingView, disposable: Disposable) {
+        fun checkProgressDone(currentProgress: Int, maxProgress: Int, view: LoadingView, disposable: Disposable) {
             if (currentProgress == maxProgress) {
                 view.startNextPage()
                 disposable.dispose()
