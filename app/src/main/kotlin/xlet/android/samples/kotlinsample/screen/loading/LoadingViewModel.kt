@@ -15,7 +15,7 @@ class LoadingViewModel(val maxProgress: Int, private val view: LoadingView) : Ba
     init {
         progress.addOnPropertyChangedCallback(object : android.databinding.Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(p0: android.databinding.Observable?, propertyId: Int) {
-                checkProgressDone(progress.get(), maxProgress, view, progressDisposable)
+                checkProgressDone(progress.get(), progressDisposable)
             }
         })
     }
@@ -24,27 +24,25 @@ class LoadingViewModel(val maxProgress: Int, private val view: LoadingView) : Ba
         progressDisposable = Observable.interval(50, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe({
-                    val newProgress = handleProgress(progress.get(), maxProgress)
+                    val newProgress = handleProgress(progress.get())
                     progress.set(newProgress)
                 })
     }
 
-    private companion object {
-        fun handleProgress(currentProgress: Int, maxProgress: Int): Int {
-            var nextProgress = currentProgress
-            when {
-                currentProgress < 0 -> nextProgress = 0
-                currentProgress >= maxProgress -> nextProgress = maxProgress
-                else -> nextProgress++
-            }
-            return nextProgress
+    internal fun handleProgress(currentProgress: Int): Int {
+        var nextProgress = currentProgress
+        when {
+            currentProgress < 0 -> nextProgress = 0
+            currentProgress >= maxProgress -> nextProgress = maxProgress
+            else -> nextProgress++
         }
+        return nextProgress
+    }
 
-        fun checkProgressDone(currentProgress: Int, maxProgress: Int, view: LoadingView, disposable: Disposable) {
-            if (currentProgress == maxProgress) {
-                view.startNextPage()
-                disposable.dispose()
-            }
+    internal fun checkProgressDone(currentProgress: Int, disposable: Disposable) {
+        if (currentProgress == maxProgress) {
+            view.startNextPage()
+            disposable.dispose()
         }
     }
 }
