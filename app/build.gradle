@@ -33,6 +33,7 @@ android {
 ext.supportLibraryVersion = '26.1.0'
 ext.daggerVersion = '2.12'
 ext.retrofitVersion = '2.3.0'
+ext.powermockVersion = '2.0.0-beta.5'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     kapt "com.android.databinding:compiler:$gradleVersion"
@@ -57,6 +58,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.12.0'
+    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
